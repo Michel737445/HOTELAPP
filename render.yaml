@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: hotelsat
+    env: python
+    pythonVersion: 3.13.4 # Spécifier la version de Python 3.13.4
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn src.main:app"
+    envVars:
+      - key: DATABASE_URL
+        generateValue: true
+      - key: SECRET_KEY
+        generateValue: true
+    autoDeploy: true
+    healthCheckPath: /health
+    routes:
+      - type: redirect
+        source: /
+        destination: /
+
